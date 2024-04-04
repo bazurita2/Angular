@@ -1,0 +1,45 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <div class="container-fluid">
+    <a class="navbar-brand" [routerLink]="'/home'" >SKI - Worker Selector</a>
+
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+
+        <ng-container *ngIf="!is_userLoaded">
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" [routerLink]="'/interview'">Entrevista</a>
+          </li>
+        </ng-container>
+
+        <ng-container *ngIf="is_userLoaded">
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" [routerLink]="'/analytics'"><b>Analítica</b></a>
+          </li>
+        </ng-container>
+
+        <li class="nav-item">
+          <a class="nav-link" [routerLink]="'/terms'">Terminos y Condiciones</a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" [routerLink]="'/about'">Nosotros</a>
+        </li>
+
+
+      </ul>
+      
+      <form #analyticsForm="ngForm" *ngIf="!is_userLoaded" novalidate class="d-flex">
+        <input [(ngModel)]="userData.key" #userkey="ngModel" type="text" name="userkey" placeholder="codigo" class="form-control me-2">
+        <button type="button" (click)="logIn()" [disabled]="!analyticsForm.valid"  class="btn btn-outline-success">Analisis</button>
+      </form>
+      <ng-container *ngIf="is_userLoaded">
+        <p class="text-light mt-3">Bienvenido <b>{{userData.name}}</b>! &nbsp;&nbsp;</p>
+        <button type="button" (click)="logOut()" class="btn btn-outline-success ml-3">Salir</button>
+      </ng-container>
+    </div>
+  </div>
+</nav>

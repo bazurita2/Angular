@@ -1,0 +1,8 @@
+<ngx-spinner bdColor="rgb(0,0,0)" size="large" color="#ffffff" type="square-spin" [fullScreen]="true">
+  <p style="color: white; margin-top: 50%;"> Loading... </p>
+</ngx-spinner>
+<div *ngIf="modelsReady">
+  <video #videoElement [style.width]="width+'px'" [style.height]="height+'px'" (loadedmetadata)="loadedMetaData()"
+    (play)="listenerPlay()" *ngIf="stream" [srcObject]="stream">
+  </video>
+</div>

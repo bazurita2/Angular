@@ -1,0 +1,72 @@
+<div class="wrapper">
+
+  <div class="header">
+    <div class="in-header">
+      <div>
+        <i class="uil uil-video"></i>
+      </div>
+      <div class="title">
+        <form #startForm="ngForm" novalidate>
+          <div class="form-group row">
+            <label class="col-sm-auto col-form-label">Nombre</label>
+            <div class="col-sm-auto">
+              <input [(ngModel)]="userData.name" #userkey="ngModel" type="text" name="username" class="form-control">
+            </div>
+
+            <div class="col-sm-auto">
+              <button type="button" (click)="empezarQuiz()" clickable class="btn btn-success">{{btnMessage}}</button>
+            </div>
+            <div *ngIf="startedQuiz" class="col-sm-auto">
+              <button type="button" (click)="stopQuiz()" clickable class="btn btn-danger">Parar</button>
+            </div>
+            <div class="col-sm-auto">
+              <app-screen-record></app-screen-record>
+            </div>
+
+          </div>
+        </form>
+      </div>
+    </div>
+    <div class="col-sm-auto">
+      <app-timer></app-timer>
+    </div>
+  </div>
+
+  <div class="block-main">
+    <div class="cam">
+      <app-video-player [width]="dimensionVideo.width" [height]="dimensionVideo.height" [stream]="currentStream">
+      </app-video-player>
+    </div>
+
+    <div class="sidebar" *ngIf="!startedQuiz">
+      <div class="zone-body">
+        <div class="block">
+          <div><b>Estado de ánimo</b></div>
+          <div class="block-expression">
+            <div *ngFor="let exp of listExpressions">
+              <span>{{exp.name}}: </span><span class="value-number">{{exp.value | number}}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div *ngIf="startedQuiz" class="overflow-auto text-center">
+      <h4 *ngIf="count != 7">Pregunta {{count+1}}. </h4>
+      <div class="row mx-auto">
+        <div style="border: 5px solid #027a2e; background-color: #42ed59;"
+          class="col-sm-auto mx-1 rounded align-content-center">
+          <h5>Positivas : {{videoPlayerService._numPositiveE}}</h5>
+        </div>
+        <div style="border: 5px solid #7a0202; background-color: #ed4242;"
+          class="col-sm-auto mx-1 rounded align-content-center">
+          <h5>Negativas: {{videoPlayerService._numNegativeE}}</h5>
+        </div>
+      </div>
+      <div *ngFor="let question of this.arrayPreguntas" cdkDrag>
+        <app-question [question]='question'></app-question>
+      </div>
+
+    </div>
+
+  </div>
